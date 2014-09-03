@@ -1,0 +1,28 @@
+<launch>
+  <!-- The name of your robot -->
+  <arg name="my_robot"/>
+  <param name="robot" value="$(arg my_robot)" />
+
+  <!-- Are you only using the kinematic simulation (only relevant for pr2)-->
+  <arg name="kinematics" default="True" />
+  <param name="kinematics" value="$(arg kinematics)" />
+
+  <!--  -->
+  <include file="$(find robohow_sot_demo)/launch/robots/$(arg my_robot).xml">
+    <arg name="kinematics" value="$(arg kinematics)" />
+  </include>
+  <include file="$(find sot_controller_wrapper)/launch/controller.launch" />
+
+  <!-- initialize sot environment -->
+  <node name="sot_initialization" pkg="dynamic_graph_bridge" type="run_command" 
+    args="$(find robohow_sot_demo)/python/$(arg my_robot)_robohow_startup.py"/>
+
+  <include file="$(find robohow_sot)/launch/sot.launch" />
+  <include file="$(find robohow_sot_demo)/launch/dummy_cram.launch">
+    <arg name="robot" value="$(arg my_robot)" />
+  </include>
+
+  <!-- display plenty of things -->
+  <include file="$(find robohow_sot_demo)/launch/displayer.launch" />
+
+</launch>
