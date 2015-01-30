@@ -1,0 +1,16 @@
+<launch>
+  <!-- The name of your robot -->
+  <arg name="my_robot"/>
+
+  <param name="robot" value="$(arg my_robot)" />
+
+  <!-- Are you only using the kinematic simulation (only relevant for pr2)-->
+  <arg name="kinematics" default="True" />
+  <param name="kinematics" value="$(arg kinematics)" />
+
+  <!-- Upload the robot -->
+  <include file="$(find robohow_sot_demo)/launch/robots/$(arg my_robot)_printer.xml">
+    <arg name="kinematics" value="$(arg kinematics)" />
+  </include>
+
+</launch>
